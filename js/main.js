@@ -15,7 +15,7 @@ var app = {
 
     showAlert: function (message, title) {
         if (navigator.notification) {
-            navigator.notification.alert(message, null, title, 'OK');
+            navigator.notification.alert("Native:"+message, null, title, 'OK');
         } else {
             alert("alert...."+title ? (title + ": " + message) : message);
         }
