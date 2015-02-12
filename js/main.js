@@ -17,11 +17,12 @@ var app = {
         if (navigator.notification) {
             navigator.notification.alert(message, null, title, 'OK');
         } else {
-            alert(title ? (title + ": " + message) : message);
+            alert("alert...."+title ? (title + ": " + message) : message);
         }
     },
 
     initialize: function() {
+        console.log("init");
         var self = this;
         this.store = new MemoryStore(function(){
             self.showAlert("store initialized", "Info");
