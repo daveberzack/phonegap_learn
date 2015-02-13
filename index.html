@@ -1,7 +1,7 @@
 <html>
 <body>
 
-<div class='header'><h1>V2</h1></div>
+<div class='header'><h1>V3</h1></div>
 	<a href="#" class="change-pic-btn">Change Picture</a>
 </div>
 
@@ -18,7 +18,7 @@
 	function changePicture() {
     
     if (!navigator.camera) {
-        app.showAlert("Camera API not supported", "Error");
+        showAlert("Camera API not supported", "Error");
         return;
     }
 
@@ -30,21 +30,23 @@
  
     navigator.camera.getPicture(
         function(imageData) {
-            $('.employee-image', this.el).attr('src', "data:image/jpeg;base64," + imageData);
+          showAlert('Success taking picture', 'Error'); 
+          //$('.employee-image', this.el).attr('src', "data:image/jpeg;base64," + imageData);
         },
-        function() {
-            app.showAlert('Error taking picture', 'Error');
-        },
+        function() { 
+	        showAlert('Error taking picture', 'Error'); 
+	      },
         options
     );
   }
 
   function init() {
-    showAlert("store initialized", "Info");
-    $(".change-pic-btn").click(self.changePicture);
+    showAlert("initialized", "Init");
+    $(".change-pic-btn").click(changePicture);
   }
 
   document.addEventListener("deviceready", init, false);
+  init();
 
 </script>
 
