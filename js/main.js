@@ -10,7 +10,6 @@ var app = {
 
     changePicture: function () {
 
-        event.preventDefault();
         if (!navigator.camera) {
             app.showAlert("Camera API not supported", "Error");
             return;
@@ -35,12 +34,8 @@ var app = {
     },
 
     initialize: function() {
-        console.log("init");
         var self = this;
-        this.store = new MemoryStore(function(){
-            self.showAlert("store initialized", "Info");
-        });
-
+        self.showAlert("store initialized", "Info");
         $(".change-pic-btn").click(self.changePicture);
     }
 
