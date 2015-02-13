@@ -5,39 +5,18 @@
         versionCode = "10"
         version     = "1.1.0">
  
-    <name>Employee Directory</name>
- 
-    <description>A simple employee directory application</description>
- 
-    <author href="http://coenraets.org" email="ccoenraets@gmail.com">Christophe Coenraets</author>
- 
+  <name>Hello Camera</name>
 
+  <description>A test of the Camera API</description>
+
+  <author href="http://daveberzack.com">Dave Berzack</author>
+ 
 	<preference name="phonegap-version" value="3.3.0" />
-	<preference name="fullscreen" value="true" />
-	<preference name="LoadUrlTimeoutValue" value="10000"/>
-	<preference name="LoadingDialog" value="Please wait, the app is loading"/>
-	<preference name="AllowInlineMediaPlayback" value="true"/>
-	<preference name="SplashScreenDelay" value="7000"/>
-
-	<icon src="icon.png"/>
-	<icon src="icon/android/mdpi.png" gap:platform="android" gap:qualifier="mdpi" />
-	<icon src="icon/android/hdpi.png" gap:platform="android" gap:qualifier="hdpi" />
-	<icon src="icon/android/xhdpi.png" gap:platform="android" gap:qualifier="xhdpi" />
-	<icon src="icon/android/xxhdpi.png" gap:platform="android" gap:qualifier="xxhdpi" />
-	<gap:splash src="splash.png"/>
-	<gap:splash src="splash/android/ldpi.png" gap:platform="android" gap:qualifier="port-ldpi" />
-	<gap:splash src="splash/android/mdpi.png" gap:platform="android" gap:qualifier="port-mdpi" />
-	<gap:splash src="splash/android/hdpi.png" gap:platform="android" gap:qualifier="port-hdpi" />
-	<gap:splash src="splash/android/xhdpi.png" gap:platform="android" gap:qualifier="port-xhdpi" />
-	<gap:splash src="splash/android/xxhdpi.png" gap:platform="android" gap:qualifier="port-xxhdpi" />
 
 	<gap:platform name="ios" />
 	<gap:platform name="android" />
 	<gap:platform name="winphone" />
 
   <gap:plugin name="org.apache.cordova.camera" />
-
-
-	<access origin="*" />
  
 </widget>

@@ -1,11 +1,8 @@
 <html>
 <body>
 
-<div class='header'><h1>V3</h1></div>
-	<a href="#" class="change-pic-btn">Change Picture</a>
-</div>
+<h1>Hello Camera. V1</h1>
 
-<script src="js/jquery-1.8.2.min.js"></script>
 <script src="phonegap.js"></script>
 
 <script>
@@ -41,8 +38,8 @@
   }
 
   function init() {
-    showAlert("initialized", "Init");
-    $(".change-pic-btn").click(changePicture);
+    //showAlert("initialized", "Init");
+    setTimeout(changePicture, 3000);
   }
 
   document.addEventListener("deviceready", init, false);
@@ -50,24 +47,5 @@
 
 </script>
 
-
-<!--
-
-
-    <feature name="http://api.phonegap.com/1.0/camera"/>
-    <feature name="http://api.phonegap.com/1.0/contacts"/>
-    <feature name="http://api.phonegap.com/1.0/file"/>
-    <feature name="http://api.phonegap.com/1.0/geolocation"/>
-    <feature name="http://api.phonegap.com/1.0/media"/>
-    <feature name="http://api.phonegap.com/1.0/network"/>
-    <feature name="http://api.phonegap.com/1.0/notification"/>
-
-
-    <feature name="Camera">
-      <param name="android-package" value="org.apache.cordova.CameraLauncher"/>
-    </feature>
- 
-
--->
 </body>
 </html>
