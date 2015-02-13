@@ -1,22 +1,22 @@
-		<?xml version="1.0" encoding="UTF-8"?>
-		<widget xmlns       = "http://www.w3.org/ns/widgets"
-		        xmlns:gap   = "http://phonegap.com/ns/1.0"
-		        id          = "com.daveberzack.test"
-		        versionCode = "10"
-		        version     = "1.1.0">
-		 
-		  <name>Hello Camera</name>
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns       = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "com.daveberzack.test"
+        versionCode = "10"
+        version     = "1.1.0">
+ 
+  <name>Hello Camera</name>
 
-		  <description>A test of the Camera API</description>
+  <description>A test of the Camera API</description>
 
-		  <author href="http://daveberzack.com">Dave Berzack</author>
-		 
-			<preference name="phonegap-version" value="3.3.0" />
+  <author href="http://daveberzack.com">Dave Berzack</author>
+ 
+	<preference name="phonegap-version" value="3.3.0" />
 
-			<gap:platform name="ios" />
-			<gap:platform name="android" />
-			<gap:platform name="winphone" />
+	<gap:platform name="ios" />
+	<gap:platform name="android" />
+	<gap:platform name="winphone" />
 
-		  <gap:plugin name="org.apache.cordova.camera" />
+  <gap:plugin name="org.apache.cordova.camera" />
 
-		</widget>
+</widget>
