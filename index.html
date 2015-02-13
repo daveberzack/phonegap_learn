@@ -9,13 +9,13 @@
 
 			function showAlert(message, title) {
 		    if (navigator.notification) navigator.notification.alert("Native:"+message, null, title, 'OK');
-		    else alert("-Alert-:"+title + " - " + message);
+		    else alert("RedAlert:"+title + " - " + message);
 		  }
 
 			function changePicture() {
 		    
 		    if (!navigator.camera) {
-		        showAlert("Camera API not supported", "Error");
+		        showAlert("Camera.API problem", "Err");
 		        return;
 		    }
 
