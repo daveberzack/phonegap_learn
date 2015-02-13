@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name = "viewport" content = "user-scalable=no,width=device-width" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Test Page</title>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <style type="text/css">
+        * {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  
+        }
+    </style>
+  <script type="text/javascript" charset="utf-8">       
+    function init(){
+        document.addEventListener("deviceready", ready, true);     
+    }
+    
+    function ready() {
+        console.log("Thunderbirds are go!");
+    }
+    
+    function dLoad() {
+		console.log("In Download Function");
+        var remoteFile = "http://i3.kym-cdn.com/entries/icons/original/000/000/080/doubt.jpg";
+        var localFileName = remoteFile.substring(remoteFile.lastIndexOf('/')+1);
+		console.log(remoteFile +"  "+ localFileName);
+        
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+            fileSystem.root.getFile(localFileName, {create: true, exclusive: false}, function(fileEntry) {
+                var localPath = fileEntry.toURL();
+				console.log(localPath);
+                var ft = new FileTransfer();
+                ft.download(remoteFile,
+                    localPath, function(entry) {
+						console.log("ft.download finally here");
+                        var dwnldImg = document.getElementById("dwnldImg");
+                        dwnldImg.src = entry.toURL();
+                        dwnldImg.style.visibility = "visible";
+                        dwnldImg.style.display = "block";
+                    }, fail);
+            }, fail);
+        }, fail);
+    }
+    
+    function fail(error) {
+        console.log(error.code);
+    }
+  </script>
+</head>
+ 
+<body onload="init();">
+	<br><br>
+    <a href="#" onclick="dLoad()">Download and display image</a>
+    <img src="" id="dwnldImg" style="display: none"/>
+</body>
+</html>

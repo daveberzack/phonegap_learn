@@ -1,33 +1,204 @@
+<!DOCTYPE html>
 <html>
-<body>
+  <head>
+    <title>InAppBrowser.removeEventListener Example</title>
 
-<div class='header'><h1>Directory</h1></div>
-<a href="#" class="change-pic-btn">Change Picture</a>
+    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+	<script type="text/javascript" src="js/Calendar.js"></script>
+	<script type="text/javascript" src="Calendar.js"></script>
+    <script type="text/javascript" charset="utf-8">
 
-</div>
+    // Wait for device API libraries to load
+    //
+	
+	document.addEventListener("deviceready", onDeviceReady, false);
+	document.removeEventListener("backbutton",onBackButton, false);
+	
+	var startDate = new Date(2014,8,15,18,0,0,0,0); // beware: month 0 = january, 11 = december
+	var endDate = new Date(2014,8,19,19,0,0,0,0);
+	var title = "My nice event";
+	var location = "Home";
+	var notes = "Some notes about this event.";
+	var success = function(message) { alert("Success: " + JSON.stringify(message)); };
+	var error = function(message) { alert("Error: " + message); };
+	
+	// device APIs are available
+    //
+    function onDeviceReady() {
+         alert("device ready");
+		 //<!--setInterval(function(){alert("Hello")},3000);
+		 //setInterval(function(){console.log("Hello")},3000);-->
+		 pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+    }
+    
+	// Global InAppBrowser reference
+    var iabRef = null;
 
-<script src="lib/jquery-1.8.2.min.js"></script>
-<script src="js/phonegap.js"></script>
-<script src="js/main.js"></script>
+    function iabLoadStart(event) {
+        alert(event.type + ' - ' + event.url);
+    }
 
+    function iabLoadStop(event) {
+        alert(event.type + ' - ' + event.url);
+    }
 
-<!--
+    function iabLoadError(event) {
+        alert(event.type + ' - ' + event.message);
+    }
 
+    function iabClose(event) {
+         alert(event.type);
+         iabRef.removeEventListener('loadstart', iabLoadStart);
+         iabRef.removeEventListener('loadstop', iabLoadStop);
+         iabRef.removeEventListener('loaderror', iabLoadError);
+         iabRef.removeEventListener('exit', iabClose);
+    }
+	
+	function openBrowser(){
+		iabRef = window.open('https://www.facebook.com/', '_system', 'location=yes,closebuttoncaption=CloseApp');
+        iabRef.addEventListener('loadstart', iabLoadStart);
+        iabRef.addEventListener('loadstop', iabLoadStop);
+        iabRef.addEventListener('loaderror', iabLoadError);
+        iabRef.addEventListener('exit', iabClose);
+	}
+	
+	function openInAppBrowser(){
+		iabRef = window.open('https://www.facebook.com/', '_blank', 'location=yes,closebuttoncaption=CloseApp');
+        iabRef.addEventListener('loadstart', iabLoadStart);
+        iabRef.addEventListener('loadstop', iabLoadStop);
+        iabRef.addEventListener('loaderror', iabLoadError);
+        iabRef.addEventListener('exit', iabClose);
+	}
+	
+	function openWebIntent(){
+		alert("Web Intent");
+		var url= "";
+		window.plugins.webintent.onNewIntent(function(url) {
+			if(url !== "") {
+				// url is the url that was passed to onNewIntent
+				alert("success");
+			}
+			else{
+				alert("empty URL");
+			}
+		});
+	}
+	
+	function scanCode(){
+		cordova.plugins.barcodeScanner.scan(
+		  function (result) {
+			  alert("We got a barcode\n" +
+					"Result: " + result.text + "\n" +
+					"Format: " + result.format + "\n" +
+					"Cancelled: " + result.cancelled);
+		  }, 
+		  function (error) {
+			  alert("Scanning failed: " + error);
+		  }
+	   );
+	}
+	
+	function nextPage(){
+		window.open("indexAudioMedia.html");
+	}
+	
+	function openFB(){
+		window.open("indexFB.html");
+	}
+	
+	function capturePhoto() {
+      // Take picture using device camera and retrieve image as base64-encoded string
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+        destinationType: destinationType.DATA_URL });
+    }
+	
+	function onPhotoDataSuccess(imageData) {
+      // Uncomment to view the base64-encoded image data
+      // console.log(imageData);
 
-    <feature name="http://api.phonegap.com/1.0/camera"/>
-    <feature name="http://api.phonegap.com/1.0/contacts"/>
-    <feature name="http://api.phonegap.com/1.0/file"/>
-    <feature name="http://api.phonegap.com/1.0/geolocation"/>
-    <feature name="http://api.phonegap.com/1.0/media"/>
-    <feature name="http://api.phonegap.com/1.0/network"/>
-    <feature name="http://api.phonegap.com/1.0/notification"/>
+      // Get image handle
+      //
+      var smallImage = document.getElementById('smallImage');
 
+      // Unhide image elements
+      //
+      smallImage.style.display = 'block';
 
-    <feature name="Camera">
-      <param name="android-package" value="org.apache.cordova.CameraLauncher"/>
-    </feature>
- 
+      // Show the captured photo
+      // The in-line CSS rules are used to resize the image
+      //
+      smallImage.src = "data:image/jpeg;base64," + imageData;
+    }
+	
+	function onFail(message) {
+      alert('Failed because: ' + message);
+    }
+	
+	function addCalendar(){
+		alert('Create Calendar event');
+		window.Calendar.createEvent(title, location, notes, startDate, endDate, 
+		function() {alert('success');}, 
+		function() {alert('fail');});
+	}
+	
+	function findMyContact(){
+		var options      = new ContactFindOptions();
+		options.filter   = "Bob";
+		options.multiple = true;
+		options.desiredFields = [navigator.contacts.fieldType.id];
+		var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];
+        navigator.contacts.find( onContactSuccess, onContactError, fields, options);
+	}
+	
+	function onContactSuccess(contacts) {
+        alert('Found ' + contacts.length + ' contacts.');
+    }
+	
+	function onContactError(contactError) {
+        alert('onError!');
+    }
+	
+	function playLocalVideo(){
+		VideoPlayer.play("file:///android_asset/www/mov_bbb.mp4");
+	}
 
--->
-</body>
+    </script>
+	<style type="text/css">
+		body{background-color:#d0e4fe;}
+		p{
+			color:red;
+			font-style:italic;	
+		}
+	</style>
+  </head>
+  <body>
+	<br>
+	<button onclick="openBrowser();">Open InappBrowser</button><br>
+	<button onclick="nextPage();">Next Page to Test InAppBrowser</button><br>
+	<button onclick="openFB();">open FaceBook Sign In Testpage </button><br>
+	<button onclick="openWebIntent();">Launch WebIntent</button><br>
+	<button onclick="window.plugins.insomnia.keepAwake()">keep awake</button><br>
+	<button onclick="window.plugins.insomnia.allowSleepAgain()">allow sleep again</button><br><br>
+	<a onclick="openInAppBrowser()" href="#">Open InappBrowser</a><br>
+	<a href="indexDownload2.html">Download Page</a><br>
+	<p>Testing in app browser and device ready with Hydration.</p>
+	<p>Now Ensuring that my CSS, HTML and JavaScript are updated by Hydration.</p>
+	<P>
+		<video width="320" height="240" controls webkit-playsinline>
+			<source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+		</video>
+	</P>
+	<P>
+		<video width="320" height="240" controls webkit-playsinline>
+			<source src="file:///android_asset/www/mov_bbb.mp4" type="video/mp4">
+		</video>
+	</P>
+	<p><button onclick="scanCode();">Scan Code</button></p>
+	<p><button onclick="playLocalVideo();">Play a video hosted locally on Android</button></p>
+	<p><button onclick="findMyContact()">Find Contact</button></p>
+	<p><button onclick="capturePhoto();">Take Picture</button></p>
+	<p><button onclick="addCalendar();">Add Event to Calendar</button></p>
+	<img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+  </body>
 </html>
