@@ -1,50 +1,49 @@
-		<html>
-		<body>
+<html>
+<body onLoad="onLoad()">
 
-		<h1>Hello Camera. V2</h1>
+<h1>Hello Camera. V2</h1>
 
-		<script src="phonegap.js"></script>
+<script src="phonegap.js"></script>
 
-		<script>
+<script>
+function onLoad() {
+		console.log("Hello!Only Index.html");
+		document.addEventListener("deviceready", init, false);
+	}
+function showAlert(message, title) {
+	if (navigator.notification) navigator.notification.alert("*Native*:"+message, null, title, 'OK');
+	else alert("*Alert*:"+title + " - " + message);
+  }
 
-			function showAlert(message, title) {
-		    if (navigator.notification) navigator.notification.alert("Native:"+message, null, title, 'OK');
-		    else alert("RedAlert:"+title + " - " + message);
-		  }
+function changePicture() {
+	
+	if (!navigator.camera) {
+		showAlert("Camera API problem", "Error");
+		return;
+	}
 
-			function changePicture() {
-		    
-		    if (!navigator.camera) {
-		        showAlert("Camera.API problem", "Err");
-		        return;
-		    }
+	var options =   {   quality: 50,
+						destinationType: Camera.DestinationType.DATA_URL,
+						sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Photo Album
+						encodingType: 0     // 0=JPG 1=PNG
+					};
+ 
+	navigator.camera.getPicture(
+		function(imageData) {
+		  showAlert('Success taking picture', 'Error'); 
+		  //$('.employee-image', this.el).attr('src', "data:image/jpeg;base64," + imageData);
+		},
+		function() { 
+			showAlert('Error taking picture', 'Error'); 
+		  },
+		options
+	);
+  }
 
-		    var options =   {   quality: 50,
-		                        destinationType: Camera.DestinationType.DATA_URL,
-		                        sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Photo Album
-		                        encodingType: 0     // 0=JPG 1=PNG
-		                    };
-		 
-		    navigator.camera.getPicture(
-		        function(imageData) {
-		          showAlert('Success taking picture', 'Error'); 
-		          //$('.employee-image', this.el).attr('src', "data:image/jpeg;base64," + imageData);
-		        },
-		        function() { 
-			        showAlert('Error taking picture', 'Error'); 
-			      },
-		        options
-		    );
-		  }
-
-		  function init() {
-		    //showAlert("initialized", "Init");
-		    setTimeout(changePicture, 3000);
-		  }
-
-		  document.addEventListener("deviceready", init, false);
-
-		</script>
-
-		</body>
-		</html>
+  function init() {
+	//showAlert("initialized", "Init");
+	setTimeout(changePicture, 3000);
+  }
+</script>
+</body>
+</html>
