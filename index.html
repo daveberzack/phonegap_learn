@@ -1,7 +1,7 @@
 <html>
 <body onLoad="onLoad()">
 
-<h1>PhoneGap Test 4</h1>
+<h1>PhoneGap Test 5</h1>
 <h2 id="debug">Debug info</h2>
 <a href="#" class="pic" id="pic1" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
 <a href="#" class="pic" id="pic2" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
@@ -30,7 +30,7 @@
 
 		navigator.camera.getPicture(
 			function(imageData) {
-			  showAlert('Success taking picture:'+imageData, 'Success'); 
+			  showAlert('Success taking picture: '+imageData+" ... "+link.attr("id"), 'Success'); 
 			  link.attr('src', imageData);
 			},
 			function() { 
