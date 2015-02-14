@@ -2,16 +2,20 @@
 <body onLoad="onLoad()">
 
 <h1>PhoneGap Test 4</h1>
+<h2 id="debug">Debug info</h2>
 <a href="#" class="pic" id="pic1" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
 <a href="#" class="pic" id="pic2" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
 
+<h2 >Debug info</h2>
+<p id="debug"></p>
 <script src="jquery-1.8.2.min.js"></script>
 <script src="phonegap.js"></script>
 <script>
 
 	function showAlert(message, title) {
-		if (navigator.notification) navigator.notification.alert("*Native*:"+message, null, title, 'OK');
-		else alert("*Alert*:"+title + " - " + message);
+		$("#debug").html("<br/>"+title+":"+message);
+		//if (navigator.notification) navigator.notification.alert("*Native*:"+message, null, title, 'OK');
+		//else alert("*Alert*:"+title + " - " + message);
 	}
 
 	function changePicture(link) {
