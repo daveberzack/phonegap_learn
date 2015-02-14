@@ -1,5 +1,5 @@
 <html>
-<body onLoad="onLoad()">
+<body>
 
 <h1>PhoneGap Test 5</h1>
 <a href="#" class="pic" id="pic1" data-index="1" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
@@ -47,9 +47,8 @@
 		$(".pic").click( function(){ changePicture( $(this).data("index"), storePicture ); });
   }
 
-	function onLoad() {
-			document.addEventListener("deviceready", init, false);
-	}
+	document.addEventListener("deviceready", init, false);
+	
 </script>
 </body>
 </html>
