@@ -1,49 +1,48 @@
 <html>
 <body onLoad="onLoad()">
 
-<h1>Hello Camera. V2</h1>
+<h1>PhoneGap Test 2</h1>
+<a href="#" class="pic" id="pic1" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
+<a href="#" class="pic" id="pic2" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
 
+<script src="jquery-1.8.2.min.js"></script>
 <script src="phonegap.js"></script>
-
 <script>
-function onLoad() {
-		console.log("Hello!Only Index.html");
-		document.addEventListener("deviceready", init, false);
-	}
-function showAlert(message, title) {
-	if (navigator.notification) navigator.notification.alert("*Native*:"+message, null, title, 'OK');
-	else alert("*Alert*:"+title + " - " + message);
-  }
 
-function changePicture() {
-	
-	if (!navigator.camera) {
-		showAlert("Camera API problem", "Error");
-		return;
+	function showAlert(message, title) {
+		if (navigator.notification) navigator.notification.alert("*Native*:"+message, null, title, 'OK');
+		else alert("*Alert*:"+title + " - " + message);
 	}
 
-	var options =   {   quality: 50,
-						destinationType: Camera.DestinationType.DATA_URL,
-						sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Photo Album
-						encodingType: 0     // 0=JPG 1=PNG
-					};
- 
-	navigator.camera.getPicture(
-		function(imageData) {
-		  showAlert('Success taking picture', 'Error'); 
-		  //$('.employee-image', this.el).attr('src', "data:image/jpeg;base64," + imageData);
-		},
-		function() { 
-			showAlert('Error taking picture', 'Error'); 
-		  },
-		options
-	);
+	function changePicture(link) {
+
+		if (!navigator.camera) {
+			showAlert("Camera API problem", "Error");
+			return;
+		}
+
+		var options = { quality: 50, destinationType: Camera.DestinationType.DATA_URL, sourceType: 1, encodingType: 0 };  // sournce: 0:Photo Library, 1=Camera, 2=Saved Photo Album  // encoding: 0=JPG 1=PNG
+	 
+		navigator.camera.getPicture(
+			function(imageData) {
+			  showAlert('Success taking picture:'+imageData, 'Success'); 
+			  link.attr('src', imageData);
+			},
+			function() { 
+				showAlert('Error taking picture', 'Error'); 
+			}, 
+			options
+		);
   }
 
   function init() {
-	//showAlert("initialized", "Init");
-	setTimeout(changePicture, 3000);
+		$(".pic").click( function(){ changePicture($(this)); });
   }
+
+	function onLoad() {
+			document.addEventListener("deviceready", init, false);
+			init();
+	}
 </script>
 </body>
 </html>
