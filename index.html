@@ -2,8 +2,8 @@
 <body onLoad="onLoad()">
 
 <h1>PhoneGap Test 5</h1>
-<a href="#" class="pic" id="pic1" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
-<a href="#" class="pic" id="pic2" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
+<a href="#" class="pic" id="pic1" data-index="1" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
+<a href="#" class="pic" id="pic2" data-index="1" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
 
 <h2 >Debug info</h2>
 <p id="debug"></p>
@@ -17,7 +17,7 @@
 		//else alert("*Alert*:"+title + " - " + message);
 	}
 
-	function changePicture(playerIndex) {
+	function changePicture(playerIndex, callback) {
 
 		if (!navigator.camera) {
 			showAlert("Camera API problem", "Error");
@@ -28,9 +28,10 @@
 	  showAlert("Take picture", "Log");
 
 		navigator.camera.getPicture(
-			function(imageData) {
-			  showAlert('Success taking picture: '+playerIndex+" ... "+imageData, 'Success'); 
-			  $("#pic"+playerIndex+" img").attr('src', imageData);
+			function(imageReference) {
+			  showAlert('Success taking picture: '+playerIndex+" ... "+imageReference, 'Success'); 
+			  $("#pic"+playerIndex+" img").attr('src', imageReference);
+			  callback(playerIndex, imageReference);
 			},
 			function() { 
 				showAlert('Error taking picture', 'Error'); 
@@ -39,8 +40,11 @@
 		);
   }
 
+  function storePicture(playerIndex, imageReference) {
+  	showAlert('Callback: '+playerIndex+":"+imageReference); 
+  }
   function init() {
-		$(".pic").click( function(){ changePicture($(this)); });
+		$(".pic").click( function(){ changePicture( $(this).data("index") ); });
   }
 
 	function onLoad() {
