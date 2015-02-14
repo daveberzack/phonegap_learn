@@ -1,7 +1,7 @@
 <html>
 <body onLoad="onLoad()">
 
-<h1>PhoneGap Test 2</h1>
+<h1>PhoneGap Test 4</h1>
 <a href="#" class="pic" id="pic1" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
 <a href="#" class="pic" id="pic2" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
 
@@ -22,11 +22,12 @@
 		}
 
 		var options = { quality: 50, destinationType: Camera.DestinationType.DATA_URL, sourceType: 1, encodingType: 0 };  // sournce: 0:Photo Library, 1=Camera, 2=Saved Photo Album  // encoding: 0=JPG 1=PNG
-	 
+	  showAlert("Take picture", "Log");
+
 		navigator.camera.getPicture(
 			function(imageData) {
 			  showAlert('Success taking picture:'+imageData, 'Success'); 
-			  link.attr('src', imageData);
+			  //link.attr('src', imageData);
 			},
 			function() { 
 				showAlert('Error taking picture', 'Error'); 
@@ -41,7 +42,6 @@
 
 	function onLoad() {
 			document.addEventListener("deviceready", init, false);
-			init();
 	}
 </script>
 </body>
