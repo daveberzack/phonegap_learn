@@ -44,7 +44,7 @@
   	showAlert('Callback: '+playerIndex+":"+imageReference); 
   }
   function init() {
-		$(".pic").click( function(){ changePicture( $(this).data("index") ); });
+		$(".pic").click( function(){ changePicture( $(this).data("index"), storePicture ); });
   }
 
 	function onLoad() {
