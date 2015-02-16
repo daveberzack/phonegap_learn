@@ -5,19 +5,16 @@
         versionCode = "10"
         version     = "1.1.0">
 
-  <name>Hello Camera</name>
-  <description>A test of the Camera API</description>
+  <name>Hello Media</name>
+  <description>A test of the Camera/Media APIs</description>
   <author href="http://daveberzack.com">Dave Berzack</author>
   
-	<preference name="phonegap-version" value="3.3.0" />
-	
-	<feature name="http://api.phonegap.com/1.0/camera" />
-  <feature name="http://api.phonegap.com/1.0/media" />
+	<preference name="phonegap-version" value="3.6.3" />
 
-	<gap:platform name="ios" />
 	<gap:platform name="android" />
 
   <gap:plugin name="org.apache.cordova.camera" />
+  <gap:plugin name="org.apache.cordova.media" />
   <gap:plugin name="org.apache.cordova.media-capture" />
 
 </widget>

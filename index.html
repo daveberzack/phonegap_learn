@@ -1,21 +1,20 @@
 <html>
 <body>
 
-<h1>PhoneGap Test 5</h1>
+<h1>PhoneGap Camera </h1>
 <a href="#" class="pic" id="pic1" data-index="1" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
 <a href="#" class="pic" id="pic2" data-index="2" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
+
+<h1>PhoneGap Audio </h1>
+<a href="#" id="record" style="font-size:30px">Record</a><br/>
+<a href="#" id="stop" style="font-size:30px">Stop</a><br/>
+<a href="#" id="play" style="font-size:30px">Play</a><br/>
 
 <h2 >Debug info</h2>
 <p id="debug"></p>
 <script src="jquery-1.8.2.min.js"></script>
 <script src="phonegap.js"></script>
 <script>
-
-	function showAlert(message, title) {
-		$("#debug").html("<br/>"+title+":"+message);
-		//if (navigator.notification) navigator.notification.alert("*Native*:"+message, null, title, 'OK');
-		//else alert("*Alert*:"+title + " - " + message);
-	}
 
 	function changePicture(playerIndex, callback) {
 
@@ -43,11 +42,49 @@
   function storePicture(playerIndex, imageReference) {
   	showAlert('Callback: '+playerIndex+":"+imageReference); 
   }
-  function init() {
-		$(".pic").click( function(){ changePicture( $(this).data("index"), storePicture ); });
+  
+
+  var mediaRec;
+  function recordAudio() {
+  	mediaRec = new Media(
+      "temp.mp3",
+      function() { // success callback
+          showAlert("Audio Success: "+mediaRec.src);
+      },
+      function(err) {  // error callback
+          showAlert("Audio Error: "+ err.code);
+      }
+    );
+
+    model.showAlert("AUDIO START: "+mediaRec.src+","+mediaRec.startRecord );
+    mediaRec.startRecord();
   }
 
-	document.addEventListener("deviceready", init, false);
+  this.stopRecordAudio = function(){
+    showAlert("Audio Stop");
+    mediaRec.stopRecord();
+  }
+
+  function playAudio() {
+    mediaRec.startPlay();
+  }
+
+
+
+
+
+
+	function showAlert(message, title) {
+		$("#debug").html("<br/>"+title+":"+message);
+		//if (navigator.notification) navigator.notification.alert("*Native*:"+message, null, title, 'OK');
+		//else alert("*Alert*:"+title + " - " + message);
+	}
+
+
+  $(".pic").click( function(){ changePicture( $(this).data("index"), storePicture ); });
+  $("#record").click( recordAudio );
+  $("#stop").click( stopAudio );
+  $("#play").click( playAudio );
 	
 </script>
 </body>
