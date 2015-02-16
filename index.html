@@ -19,7 +19,7 @@
 	function changePicture(playerIndex, callback) {
 
 		if (!navigator.camera) {
-			showAlert("Camera API problem", "Error");
+			showAlert("Camera API problem");
 			return;
 		}
 
@@ -28,12 +28,12 @@
 
 		navigator.camera.getPicture(
 			function(imageReference) {
-			  showAlert('Success taking picture: '+playerIndex+" ... "+imageReference, 'Success'); 
+			  showAlert('Success taking picture: '+playerIndex+" ... "+imageReference); 
 			  $("#pic"+playerIndex+" img").attr('src', imageReference);
 			  callback(playerIndex, imageReference);
 			},
 			function() { 
-				showAlert('Error taking picture', 'Error'); 
+				showAlert('Error taking picture'); 
 			}, 
 			options
 		);
@@ -74,8 +74,8 @@
 
 
 
-	function showAlert(message, title) {
-		$("#debug").html("<br/>"+title+":"+message);
+	function showAlert(message) {
+		$("#debug").html("<br/>"+message);
 		//if (navigator.notification) navigator.notification.alert("*Native*:"+message, null, title, 'OK');
 		//else alert("*Alert*:"+title + " - " + message);
 	}
