@@ -45,28 +45,40 @@
   
 
   var mediaRec;
-  function recordAudio() {
+  var mediaFileReference;
+  function recordAudio(filename) {
+
   	mediaRec = new Media(
-      "temp.mp3",
+      filename,
       function() { // success callback
-          showAlert("Audio Success: "+mediaRec.src);
+          showAlert("Record Success: "+mediaRec.src);
+          mediaFileReference = mediaRec.src;
       },
       function(err) {  // error callback
-          showAlert("Audio Error: "+ err.code);
+          showAlert("Record Error: "+ err.code);
       }
     );
 
-    showAlert("AUDIO START: "+mediaRec.src+","+mediaRec.startRecord );
+    showAlert("Record Start: "+mediaRec.src+","+mediaRec.startRecord );
     mediaRec.startRecord();
   }
 
   this.stopRecordAudio = function(){
-    showAlert("Audio Stop");
+    showAlert("Record Stop");
     mediaRec.stopRecord();
   }
 
-  function playAudio() {
-    mediaRec.startPlay();
+  function playAudio(filename) {
+    var mediaPlay = new Media(
+      filename,
+      function() { // success callback
+          showAlert("Play Success: "+mediaPlay.src);
+    			mediaPlay.startPlay();
+      },
+      function(err) {  // error callback
+          showAlert("Play Error: "+ err.code);
+      }
+    );
   }
 
 
@@ -82,9 +94,9 @@
 
 
   $(".pic").click( function(){ changePicture( $(this).data("index"), storePicture ); });
-  $("#record").click( recordAudio );
-  $("#stop").click( stopAudio );
-  $("#play").click( playAudio );
+  $("#record").click( function(){ recordAudio("temp.mp3"); });
+  $("#stop").click( stopRecordAudio );
+  $("#play").click( function(){ playAudio("temp.mp3"); });
 	
 </script>
 </body>
