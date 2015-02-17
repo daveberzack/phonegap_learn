@@ -69,6 +69,7 @@
   }
 
   function playAudio(filename) {
+	  showAlert("Play Start: "+filename);
     var mediaPlay = new Media(
       filename,
       function() { // success callback
@@ -87,7 +88,7 @@
 
 
 	function showAlert(message) {
-		$("#debug").html("<br/>"+message);
+		$("#debug").append("<br/>"+message);
 		//if (navigator.notification) navigator.notification.alert("*Native*:"+message, null, title, 'OK');
 		//else alert("*Alert*:"+title + " - " + message);
 	}
