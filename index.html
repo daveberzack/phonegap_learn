@@ -11,17 +11,10 @@
 	<a href="#" id="play" style="font-size:30px">Play</a><br/>
 	
 	<h2 >Debug info</h2>
-	<p id="debug"></p>
-	
+	<p id="debug"></p>	
 	<script src="jquery-1.8.2.min.js"></script>
 	<script src="phonegap.js"></script>
 	<script>
-	function onLoad() {
-		document.addEventListener("deviceready", onDeviceReady, false);
-	}
-	function onDeviceReady() {
-		//alert(Media);
-	}
 	
  	function changePicture(playerIndex, callback) {
 		if (!navigator.camera) {
@@ -69,18 +62,11 @@
 
   function stopRecordAudio(){
     showAlert("Record Stop");
-	//alert("Record Stop");
     mediaRec.stopRecord();
   }
 
   function playAudio(filename) {
    showAlert("Play Start: "+filename);
-   //alert("Play Start");
-   /*if (mediaRec != null) {
-		mediaRec.play();
-	}
-	else
-	{*/
 		var newmediaRec = new Media(
 		  filename,
 		  function() { // success callback
@@ -91,7 +77,6 @@
 		  }
 		);
 		newmediaRec.play();
-	//}
   }
 
  function showAlert(message) {

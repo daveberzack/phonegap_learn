@@ -8,22 +8,13 @@
   <name>Hello Media</name>
   <description>A test of the Camera/Media APIs</description>
   <author href="http://daveberzack.com">Dave Berzack</author>
- 
-	<preference name="phonegap-version" value="3.6.3" />
-	
-	<!--<feature name="http://api.phonegap.com/1.0/network" />
-  <feature name="http://api.phonegap.com/1.0/camera" />
-  <feature name="http://api.phonegap.com/1.0/notification" />
-  <feature name="http://api.phonegap.com/1.0/media" />
-  <feature name="http://api.phonegap.com/1.0/device" />-->
+  
+  <preference name="phonegap-version" value="3.6.3" />
 
-	<gap:platform name="android" />
+  <gap:platform name="android" />
 
-    <gap:plugin name="org.apache.cordova.camera" />
-    <gap:plugin name="org.apache.cordova.media" />
-    <gap:plugin name="org.apache.cordova.media-capture" />
-    <!--
-    <gap:plugin name="org.apache.cordova.console" />
-    <gap:plugin name="org.apache.cordova.device" />
-    <gap:plugin name="org.apache.cordova.dialogs" />-->
+  <gap:plugin name="org.apache.cordova.camera" />
+  <gap:plugin name="org.apache.cordova.media" />
+  <gap:plugin name="org.apache.cordova.media-capture" />
+
 </widget>
