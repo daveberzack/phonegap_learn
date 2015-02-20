@@ -1,104 +1,95 @@
 <html>
 <body>
 
-<h1>PhoneGap Camera </h1>
-<a href="#" class="pic" id="pic1" data-index="1" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
-<a href="#" class="pic" id="pic2" data-index="2" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
-
-<h1>PhoneGap Audio </h1>
-<a href="#" id="record" style="font-size:30px">Record</a><br/>
-<a href="#" id="stop" style="font-size:30px">Stop</a><br/>
-<a href="#" id="play" style="font-size:30px">Play</a><br/>
-
-<h2 >Debug info</h2>
-<p id="debug"></p>
-<script src="jquery-1.8.2.min.js"></script>
-<script src="phonegap.js"></script>
-<script>
-
-	function changePicture(playerIndex, callback) {
-
+	<h1>PhoneGap Camera </h1>
+	<a href="#" class="pic" id="pic1" data-index="1" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
+	<a href="#" class="pic" id="pic2" data-index="2" style="position:relative; display:inline-block; width:40%; margin:10px 2%"><img src="test.jpg" style="width:100%"/></a>
+	
+	<h1>PhoneGap Audio </h1>
+	<a href="#" id="record" style="font-size:30px">Record</a><br/>
+	<a href="#" id="stop" style="font-size:30px">Stop Record</a><br/>
+	<a href="#" id="play" style="font-size:30px">Play</a><br/>
+	
+	<h2 >Debug info</h2>
+	<p id="debug"></p>	
+	<script src="jquery-1.8.2.min.js"></script>
+	<script src="phonegap.js"></script>
+	<script>
+	
+ 	function changePicture(playerIndex, callback) {
 		if (!navigator.camera) {
 			showAlert("Camera API problem");
 			return;
 		}
 
-		var options = { quality: 50, destinationType: Camera.DestinationType.FILE_URI, sourceType: 1, encodingType: 0 };  // sournce: 0:Photo Library, 1=Camera, 2=Saved Photo Album  // encoding: 0=JPG 1=PNG
-	  showAlert("Take picture", "Log");
+  		var options = { quality: 50, destinationType: Camera.DestinationType.FILE_URI, sourceType: 1, encodingType: 0 };  // sournce: 0:Photo Library, 1=Camera, 2=Saved Photo Album  // encoding: 0=JPG 1=PNG
+	   	showAlert("Take picture", "Log");
 
-		navigator.camera.getPicture(
-			function(imageReference) {
-			  showAlert('Success taking picture: '+playerIndex+" ... "+imageReference); 
-			  $("#pic"+playerIndex+" img").attr('src', imageReference);
-			  callback(playerIndex, imageReference);
-			},
-			function() { 
-				showAlert('Error taking picture'); 
-			}, 
-			options
-		);
-  }
+  		navigator.camera.getPicture(
+   function(imageReference) {
+     showAlert('Success taking picture: '+playerIndex+" ... "+imageReference); 
+     $("#pic"+playerIndex+" img").attr('src', imageReference);
+     callback(playerIndex, imageReference);
+   },
+   function() { 
+    showAlert('Error taking picture'); 
+   }, 
+   options
+  );
+  	}
 
-  function storePicture(playerIndex, imageReference) {
-  	showAlert('Callback: '+playerIndex+":"+imageReference); 
-  }
+	function storePicture(playerIndex, imageReference) {
+   		showAlert('Callback: '+playerIndex+":"+imageReference); 
+	}
   
+  	var mediaRec = null;
+  	var mediaFileReference;
+  	function recordAudio(filename) {
+		//alert("Inside Record Audio"+filename);
+   		mediaRec = new Media(
+		  filename,
+		  function() { // success callback
+			  showAlert("Record Success: "+mediaRec.src);
+			  mediaFileReference = mediaRec.src;
+		  },
+		  function(err) {  // error callback
+			  showAlert("Record Error: "+ err.code);
+		  }
+		);
+	    showAlert("Record Start: "+mediaRec.src+","+mediaRec.startRecord );
+    	mediaRec.startRecord();
+  	}
 
-  var mediaRec;
-  var mediaFileReference;
-  function recordAudio(filename) {
-
-  	mediaRec = new Media(
-      filename,
-      function() { // success callback
-          showAlert("Record Success: "+mediaRec.src);
-          mediaFileReference = mediaRec.src;
-      },
-      function(err) {  // error callback
-          showAlert("Record Error: "+ err.code);
-      }
-    );
-
-    showAlert("Record Start: "+mediaRec.src+","+mediaRec.startRecord );
-    mediaRec.startRecord();
-  }
-
-  this.stopRecordAudio = function(){
+  function stopRecordAudio(){
     showAlert("Record Stop");
     mediaRec.stopRecord();
   }
 
   function playAudio(filename) {
-	  showAlert("Play Start: "+filename);
-    var mediaPlay = new Media(
-      filename,
-      function() { // success callback
-          showAlert("Play Success: "+mediaPlay.src);
-      },
-      function(err) {  // error callback
-          showAlert("Play Error: "+ err.code);
-      }
-    );
-    			mediaPlay.startPlay();
+   showAlert("Play Start: "+filename);
+		var newmediaRec = new Media(
+		  filename,
+		  function() { // success callback
+			  showAlert("Play Success: ");
+		  },
+		  function(err) {  // error callback
+			  showAlert("Play Error: "+ err.code);
+		  }
+		);
+		newmediaRec.play();
   }
 
-
-
-
-
-
-	function showAlert(message) {
-		$("#debug").append("<br/>"+message);
-		//if (navigator.notification) navigator.notification.alert("*Native*:"+message, null, title, 'OK');
-		//else alert("*Alert*:"+title + " - " + message);
-	}
-
+ function showAlert(message) {
+  $("#debug").append("<br/>"+message);
+  //if (navigator.notification) navigator.notification.alert("*Native*:"+message, null, title, 'OK');
+  //else alert("*Alert*:"+title + " - " + message);
+ }
 
   $(".pic").click( function(){ changePicture( $(this).data("index"), storePicture ); });
-  $("#record").click( function(){ recordAudio("temp.mp3"); });
-  $("#stop").click( stopRecordAudio );
-  $("#play").click( function(){ playAudio("temp.mp3"); });
-	
+  $("#record").click( function(){ recordAudio("recording.mp3"); });
+  $("#stop").click( function(){ stopRecordAudio(); });
+  $("#play").click( function(){ playAudio("recording.mp3"); });
+ 
 </script>
 </body>
 </html>
